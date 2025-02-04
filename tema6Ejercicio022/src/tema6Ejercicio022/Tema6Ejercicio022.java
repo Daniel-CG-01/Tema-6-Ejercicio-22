@@ -34,9 +34,10 @@ static void menu() {
 		case 1:
 			System.out.print("Introduce un término: ");
 			termino=entrada.next();
+			entrada.nextLine();
 			
 			System.out.print("Introduce su definición: ");
-			definicion=entrada.next();
+			definicion=entrada.nextLine();
 			
 			p=new Palabra(termino, definicion);
 			diccionario[contador]=p;
@@ -47,8 +48,8 @@ static void menu() {
 			break;
 		case 2:
 			try {
-				for (Palabra pal:diccionario) {
-					System.out.println(pal.getTermino());
+				for(int i=0; i<contador; i++) {
+					System.out.print(diccionario[i].getTermino()+"-");
 				}
 			} catch (Exception NullPointerException) {
 				System.out.println("No hay más términos");
@@ -56,9 +57,43 @@ static void menu() {
 			
 			System.out.println();
 			break;
+		case 3:
+			try {
+				System.out.println("Introduce el término");
+				termino=entrada.next();
+				for(Palabra pal:diccionario) {
+					if(pal.getTermino().equals(termino)) {
+						System.out.println(pal.getTermino()+": "+pal.getDefinicion());
+					}
+					
+				}
+			}catch(NullPointerException e) {
+				System.out.println();
+			}
+			break;
+		case 4:
+			try {
+				int eliminada=0;
+				System.out.println("Introduce el término");
+				termino=entrada.next();
+				for(int i=0; i<contador; i++) {
+					if(diccionario[i].getTermino().equals(termino)) {
+						eliminada=i;
+					}
+				}
+				for(int i=eliminada+1; i<contador; i++) {
+					diccionario[i-1]=diccionario[i];
+				}
+				contador--;
+
+			}catch(NullPointerException e) {
+				System.out.println();
+			}
+			break;
+		case 5:
+			System.out.println("Fin del programa");
 		default:
-			System.out.println("Opción no válida. Por favor, selecciona una opción del menu: ");
-			opcion=entrada.nextInt();
+			System.out.print("Opción no válida. Por favor, selecciona una opción del menu");
 		}
 	} while (opcion!=5);
 	
